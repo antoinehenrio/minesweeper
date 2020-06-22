@@ -1,13 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <script type="text/javascript" src="scripts/minesweeper.js"></script>
-    <h1>Démineur</h1>
-
+    <title>MineSweeper</title>
+    <meta charset="UTF-8" />
+    <script src="minesweeper.js"></script>
+    <script>
+        /* on load scripts */
+        window.onload = function() {
+            MineSweeper.initialise();
+        }
+    </script>
+    <link href="minesweeper.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+<div class="page">
+    <h1>
+        D&eacute;mineur
+    </h1>
+    <div>
+        &nbsp;
+    </div>
+    <div class="game" id="plateau">
 
+
+    </div>
+    <div class="options">
+
+        <div id="result" class="result">
+
+        </div>
+
+        <div class="menus">
+            <div class="menu" onclick="minesweeper.startGame('easy');">
+                Jouer "Facile"
+            </div>
+            <div class="menu" onclick="minesweeper.startGame('normal');">
+                Jouer "Normal"
+            </div>
+            <div class="menu" onclick="minesweeper.startGame('hard');">
+                Jouer "Difficile"
+            </div>
+            <div class="menu" onclick="minesweeper.startGame('extreme');">
+                Jouer "Extr&ecirc;me"
+            </div>
+        </div>
+    </div>
+</div>
 </body>
-
 </html>
