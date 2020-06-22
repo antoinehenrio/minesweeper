@@ -24,26 +24,24 @@ var minesweeper = {
         },
     },
 
-    settings: {
-
-    },
+    settings: {},
 
     game: {
         status: 0,
         field: new Array(),
     },
 
-    initialise: function() {
+    initialise: function () {
         this.startGame('easy');
     },
 
-    startGame: function(difficulty) {
+    startGame: function (difficulty) {
         this.settings = this.difficulties[difficulty];
         this.drawGameBoard();
         this.resetGame();
     },
 
-    drawGameBoard: function() {
+    drawGameBoard: function () {
 
         board = document.getElementById('plateau');
         board.innerHTML = '';
@@ -63,17 +61,17 @@ var minesweeper = {
 
             for (j = 1; j <= this.settings['columns']; j++) {
                 cell = document.createElement('td');
-                cell.id = 'cell-'+i+'-'+j;
+                cell.id = 'cell-' + i + '-' + j;
                 cell.className = 'cell';
-                cell.setAttribute('onclick', this.name+'.checkPosition('+i+', '+j+', true);');
-                cell.setAttribute('oncontextmenu', this.name+'.markPosition('+i+', '+j+'); return false;');
+                cell.setAttribute('onclick', this.name + '.checkPosition(' + i + ', ' + j + ', true);');
+                cell.setAttribute('oncontextmenu', this.name + '.markPosition(' + i + ', ' + j + '); return false;');
                 line.appendChild(cell);
             }
             field.appendChild(line);
         }
     },
 
-    resetGame: function() {
+    resetGame: function () {
 
         /* Creons le champ, vide */
         this.game.field = new Array();
@@ -96,14 +94,14 @@ var minesweeper = {
             this.game.field[x][y] = -1;
 
             /* On met a jour les donnees des cellules adjacentes */
-            for (j = x-1; j <= x+1; j++) {
+            for (j = x - 1; j <= x + 1; j++) {
                 if (j == 0 || j == (this.settings['columns'] + 1))
                     continue;
-                for (k = y-1; k <= y+1; k++) {
+                for (k = y - 1; k <= y + 1; k++) {
                     if (k == 0 || k == (this.settings['lines'] + 1))
                         continue;
                     if (this.game.field[j][k] != -1)
-                        this.game.field[j][k] ++;
+                        this.game.field[j][k]++;
                 }
             }
         }
@@ -112,7 +110,7 @@ var minesweeper = {
         this.game.status = 1;
     },
 
-    checkPosition: function(x, y, check) {
+    checkPosition: function (x, y, check) {
 
         /* Verifie si le jeu est en fonctionnement */
         if (this.game.status != 1)
@@ -130,16 +128,16 @@ var minesweeper = {
 
         /* Verifie si la cellule est un mine */
         if (this.game.field[x][y] == -1) {
-            document.getElementById('cell-'+x+'-'+y).className = 'cell bomb';
+            document.getElementById('cell-' + x + '-' + y).className = 'cell bomb';
             this.displayLose();
             return;
         }
 
         /* Marque la cellule comme verifiee */
-        document.getElementById('cell-'+x+'-'+y).className = 'cell clear';
+        document.getElementById('cell-' + x + '-' + y).className = 'cell clear';
         if (this.game.field[x][y] > 0) {
             /* On marque le nombre de mine des cases adjacentes */
-            document.getElementById('cell-'+x+'-'+y).innerHTML = this.game.field[x][y];
+            document.getElementById('cell-' + x + '-' + y).innerHTML = this.game.field[x][y];
 
             /* On marque la case comme visitee */
             this.game.field[x][y] = -2;
@@ -148,10 +146,10 @@ var minesweeper = {
             this.game.field[x][y] = -2;
 
             /* On devoile les cases adjacentes */
-            for (var j = x-1; j <= x+1; j++) {
+            for (var j = x - 1; j <= x + 1; j++) {
                 if (j == 0 || j == (this.settings['columns'] + 1))
                     continue;
-                for (var k = y-1; k <= y+1; k++) {
+                for (var k = y - 1; k <= y + 1; k++) {
                     if (k == 0 || k == (this.settings['lines'] + 1))
                         continue;
                     if (this.game.field[j][k] > -1) {
@@ -166,7 +164,7 @@ var minesweeper = {
             this.checkWin();
     },
 
-    markPosition: function(x, y) {
+    markPosition: function (x, y) {
 
         /* Verifie si le jeu est en fonctionnement */
         if (this.game.status != 1)
@@ -178,19 +176,19 @@ var minesweeper = {
 
         if (this.game.field[x][y] < -90) {
             /* Retire le marquage */
-            document.getElementById('cell-'+x+'-'+y).className = 'cell';
-            document.getElementById('cell-'+x+'-'+y).innerHTML = '';
+            document.getElementById('cell-' + x + '-' + y).className = 'cell';
+            document.getElementById('cell-' + x + '-' + y).innerHTML = '';
             this.game.field[x][y] += 100;
 
         } else {
             /* Applique le marquage */
-            document.getElementById('cell-'+x+'-'+y).className = 'cell marked';
-            document.getElementById('cell-'+x+'-'+y).innerHTML = '!';
+            document.getElementById('cell-' + x + '-' + y).className = 'cell marked';
+            document.getElementById('cell-' + x + '-' + y).innerHTML = '!';
             this.game.field[x][y] -= 100;
         }
     },
 
-    checkWin: function() {
+    checkWin: function () {
         /* On verifie toutes les cases */
         for (var i = 1; i <= this.settings['lines']; i++) {
             for (var j = 1; j <= this.settings['columns']; j++) {
@@ -204,16 +202,16 @@ var minesweeper = {
         this.displayWin();
     },
 
-    displayWin: function() {
+    displayWin: function () {
         /* Affiche le resultat dans l'espace dedie, en couleur */
-        document.getElementById('result').innerHTML = 'Gagn&eacute;';
+        document.getElementById('result').innerHTML = 'Gagné;';
         document.getElementById('result').style.color = '#43b456';
 
         /* Defini l'etat de la partie a termine */
         this.game.status = 0;
     },
 
-    displayLose: function() {
+    displayLose: function () {
         /* Affiche le resultat dans l'espace dedie, en couleur */
         document.getElementById('result').innerHTML = 'Perdu';
         document.getElementById('result').style.color = '#CC3333';
